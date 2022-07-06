@@ -1,0 +1,9 @@
+{% extends 'opcoder/base.html' %}
+{% block body %}
+{% load static %}
+    <div>
+        <video class="video-playing" controls >
+            <source src="{% static 'opcoder/final videos/intro.mp4' %}">
+        </video>
+    </div>
+{% endblock body %}
