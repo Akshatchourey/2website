@@ -1,48 +1,58 @@
 {% extends 'opcoder/base.html' %}
 {% block body %}
 {% load static %}
-    <section class="background section-0" >
-        <div class="div-2">
-            <ul class="uli-2">
-                <h1>Welcome to CoadWithAkshat_C</h1>
-                <p>Hare you will get the orignal Videos,Photos, Vlogs etc.<br>So stay tuned. </p>
-                <div style="display: flex;">
-                    <form action="/video">
+    <section class="section-0" >
+        <div class="div3">
+            <ul class="uli3">
+                <h1>Welcome to</h1> <h2>CodeWithAkshat_C</h2>
+                <p class="p1">Hare you will get the orignal Videos,Photos, Vlogs etc ubciyavucw uyclusybc y cu cguyscyu bsuvbs uycyc bsyucby.<br>So stay tuned. </p>
+                <div class="div-exp">
+                    <div action="/video">
                         <button class="button-1">Video</button>
-                    </form>
-                    <form action="/photos">
+                    </div>
+                    <div action="/photos">
                         <button class="button-1">Photos</button>
-                    </form>
+                    </div>
                 </div>
-                
-                
             </ul>
-            <img src="{% static 'opcoder/img/2.jpg' %}" alt="logo">
+            <ul class="background uli4">    
+                <img src="{% static 'opcoder/img/2.jpg' %}" alt="logo">     
+            </ul>   
         </div>
     </section>
-    <section class="section-1">
-        <div class="div-3">
-            <img src="{% static 'opcoder/img/game.jpg' %}" alt="photo">
-            <div>
+    <h5>Recommendations for you</h5>
+    <section class="section1">  
+        <div class="div4">
+            <img src="{% static 'opcoder/img/game.jpg' %}"alt="photo">
+            <div class="div5">
                 <h3>Gaming center.</h3>
-                <p>Watch videos of diffrent games, and get reefreshed <br>with amasing stuntes, shutings, gameplay.</p>
+                <p>Watch videos of diffrent games, and get reefreshed with amasing stuntes, shutings, gameplay.</p>
             </div>
             <button class="button-2">click--></button>
         </div>
-        <div class="div-3">
+        <div class="div4">
             <img src="{% static 'opcoder/img/vlog.jpg' %}" alt="photo">
-            <h3>Vlogs of mine.</h3>
-            <p> Watch my vloge, enjoy the jorney to the hills, <br>  lots of comedy with my freanda and Kalyug.  </p>
+            <div class="div5">
+                <h3>Blogs of mine.</h3>
+                <p> Watch my bloge, enjoy the jorney to the hills,   lots of comedy with my freanda and Kalyug.  </p>
+            </div>
+            <button class="button-2">click--></button>
+        </div>      
+        <div class="div4">
+            <img src="{% static 'opcoder/img/python.jpg' %}"alt="photo">
+            <div class="div5">
+                <h3>Free python courses</h3>
+                <p class="p-1">Get your programming career started with these free video courses. Source code is available with all the videos for amazing learning experience.</p>
+            </div>
             <button class="button-2">click--></button>
         </div>
-        <div class="div-3">
-            <img src="{% static 'opcoder/img/python.jpg' %}" alt="photo">
-            <h3>Free python courses</h3>
-            <p class="p-1">Get your programming career started with these<br> free video courses. Source code is available with all<br> the videos for amazing learning experience.</p>
+        <div class="div4">
+            <img src="{% static 'opcoder/img/vlog.jpg' %}" alt="photo">
+            <div class="div5">
+                <h3>Blogs of mine.</h3>
+                <p> Watch my bloge, enjoy the jorney to the hills,   lots of comedy with my freanda and Kalyug.</p>
+            </div>
             <button class="button-2">click--></button>
-        </div>
-        
+        </div>  
     </section>
-{% endblock body %}
-<!-- home, video, blog, commtect, private,  -->
-<!-- search, sign, signup -->
+    {% endblock body %}

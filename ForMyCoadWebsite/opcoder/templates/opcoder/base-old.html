@@ -9,28 +9,28 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    <nav class="nav-bar " >
+    <nav class="nav-bar background" >
         <div class="div1">
             <img class="logo" src="{% static 'opcoder/img/1.jpg' %}" alt="logo">
-            <ul class="uli1">
+            <ul class="uli-1">
                 <li><a href='/'>Home</a></li>
                 <li><a href=/video/>Video</a></li>
                 <li><a href=/blogs/>Blog</a></li>
                 <li><a href=/comment/>Comment</a></li>
                 <li><a href=/private/>private</a></li>
             </ul>
-            <div class="div2">
-                <div action="/login">
-                    <button class="button-1" >login</button>
-                </div>
-                <div action="/sign_up">
-                    <button class="button-1">SignUp</button>
-                </div>
-                <div action="">
-                    <input  type="text" placeholder="Search" aria-label="Search" name="query" class="inp-1" >
-                    <button type="submit" class="button-1">Search</button>
-                </div>
-            </div>
+        </div>
+        <div class="logins"style="display: contents;">
+            <form class="mx-0" action="">
+                <input  type="text" placeholder="Search" aria-label="Search" name="query" class="inp-1" >
+                <button type="submit" class="button-0">Search</button>
+            </form>
+            <form action="/login">
+                <button class="button-0" >login</button>
+            </form>
+            <form action="/sign_up">
+                <button class="button-0">SignUp</button>
+            </form>
         </div>
     </nav>
 
@@ -38,8 +38,8 @@
 
     <footer>
         <p class="text-footer">
-            copyright &copy; 2027 - WWW.CoadWithAkshat_C.com - All rights reserved.
+            9425679568, 8817932420 | achourey09@gmail.com<br>copyright &copy; 2027 - WWW.CodeWithAkshat_C.com - proudly make by Akshat_c.
         </p>
     </footer>
 </body>
-</html>        
+</html>

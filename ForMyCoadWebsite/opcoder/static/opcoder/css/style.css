@@ -1,165 +1,155 @@
 *{
     margin:0;
     padding:0;
+    /* . is for class make by us where objects without . is like image div li ul etc. */
 }
-nav{
-    padding-left: 4px;
-}
-.nav-bar{
-    position:sticky;
+nav-bar{   
+    position: sticky;
     top: 0;
-    display: flex;
-    align-items:center;
 }
 .div1{
-    display: flex;
     align-items: center;
-    padding-right:5px;
-    margin-right: 566px;
-
+    display:flex;
+    margin-left:auto;margin-right:auto;
+    max-width: 1450px;
 }
-.uli-1{
+.uli1{
+    width: 50%;
+}
+.div2{
+    align-items: center;
+    width: 50%;
     display: flex;
-    text-align: center;
-    list-style: none;
+    flex-direction: row-reverse;
 }
-li a{
-    padding: 10px;
-    font-style:normal;
-    text-decoration: none;
-    color: white;
-    font-size: 23px;
+
+h1{
+    font-size: 2.25rem;
+}
+h2{
+    font-size: 2.25rem;
+    color: rgba(4, 187, 90, 0.881);
+}
+.p1{
+    font-size: 1.2rem;
+}
+
+.inp-1{
+    border-radius: 16px;
+    width: 200px;
+    height: 35px;
+    margin: 4px;
+}
+.background{
+    background: rgba(0,0,0,0.6) url("../img/background/bg2(1).jpg");
+    /* background-size: cover;
+    background-blend-mode: darken; */
 }
 img{
     border: 2px solid white;
     border-radius: 50%;
-}
-.mx-1{
-    padding-left:5px;
-}
-.inp-1{
-    width:200px ;
-    height: 45px;
-    border-radius: 22px;
-    font-size:19px;
-    text-align: center;
-}
-.button-0{
-    background-color: red;
-    border-radius: 22px;
-    width: 80px;
-    height: 50px;
-    cursor: pointer;
-    font-size:19px;
-}
-.button-0:hover{
-    background-color: rgb(90, 212, 9);
-    border-radius: 22px;
-    width: 80px;
-    height: 50px;
-    cursor: pointer;
-    font-size:19px;
-}
-.background{
-    background: rgba(0,0,0,0.6) url("../img/background/bg.jpg");
-    background-size: cover;
-    background-blend-mode: darken;
-}
-
-.div-2{
-    display: flex;
-    align-items: center;
-    padding-bottom: 320px;
-    padding-left: 29%;
-    padding-top: 180px;
-}
-.uli-2{
-    color: white;
-    list-style: none;
-    padding-right: 50px;
-    font-size: 20px;
-}
-h1{
-    padding-bottom: 3px;
-}
+}  
 .button-1{
-    background-color: rgb(255, 0, 0);
-    border-radius: 22px;
-    width: 90px;
-    height: 45px;
+    background-color: rgb(0, 176, 82);
+    border-radius: 16px;
+    width: 75px;
+    height: 35px;
     cursor: pointer;
     font-size:19px;
-    align-items: flex-end;
-    margin: 10px;
+    margin: 4px;
 }
 
 .button-1:hover{
-    background-color: rgb(170, 4, 4);
-    border-radius: 22px;
-    width: 90px;
-    height: 45px;
+    background-color: rgba(0, 176, 82, 0.781);
+    border-radius: 14px;
+    width: 75px;
+    height: 35px;
     cursor: pointer;
     font-size:19px;
-    align-items: flex-end;
-    margin: 10px;
+    margin: 4px;
+}
+li{
+    display: inline-flex;
+}
+li a:hover{
+    color: rgba(0, 176, 82, 0.781);;
+    text-decoration:underline 2px;
+}
+li a{
+    display: block;
+    color: rgba(0, 0, 0, 0.915);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-.section-1{
+
+.div3{
+    display:flex;
+    height: 18rem;
+    margin-left: auto;margin-right: auto;
+    max-width: 1450px;
+}
+.uli3{
+    width: 50%;
+    padding-top: 20px;
+    align-items: left;
+}
+.div-exp{
     display: flex;
-    align-items: center;
-    padding: 110px 0;
-    flex-wrap: wrap;
-    margin: 0 100px;
 }
-.div-3{
-    border: 3px solid rgb(97, 88, 88);
-    align-items: center;
-    text-align: center;
-    margin: 0 30px;
-    padding: 25px;
-    border-radius: 2%;
-    padding-bottom: 50px;
+.uli4{
+    width:50%;
 }
 
-h3{
-    margin-top:1px;
-    margin-bottom:5px;
-}
-h4{
-    font-size: 100px;
-}
-p{
-    text-align: center;
-    box-sizing: border-box;
-    margin-bottom: 12px;
-}
 
 .button-2{
     color: #fff;
-    padding: 6px 12px;
-    background-color: #007bff;
-    border: 1px #007bff;
+    background-color: #1577e0;
+    border: 1px #1577e0;
     cursor: pointer;
-    margin: 0 3px;
-    padding: 8px 70px;
+    margin-top: 10px;
+    padding: 8px 50px;
     border-radius: 3%;
 
 }
 .button-2:hover{
     color: #fff;
-    padding: 6px 12px;
     background-color: #085eb9;
     border: 1px #085eb9;
     cursor: pointer;
-    margin: 0 3px;
-    padding: 8px 70px;
+    padding: 8px 50px;
     border-radius: 3%;
-
 }
+h5{
+    margin-top: 10px;
+    font-size: 2.25rem;
+    text-align: center;
+}
+.section1{
+    flex-wrap: wrap;
+    display: flex;
+    margin-left: auto;margin-right: auto;
+    max-width: 1500px;
+    align-items: center;
+    
+}
+.div4{
+    text-align: center;
+    border: 2px solid rgb(97, 17, 78);border-radius: 20px;
+    height:min-content;width:20%;
+    margin: 1%;margin-bottom: 12px;
+    padding: 16px;
+}
+.div5{
+    text-align: left;
+}
+
+
 .text-footer{
-    padding: 10px 0;
+    padding: 5px 0;
     font-family: 'ubunto',sans-serif;
-    color:white;
-    background-color: rgba(32, 29, 29, 0.801);
+    color:rgb(33, 25, 28);
+    background-color: rgba(142, 172, 157, 0.801);
     text-align: center;
 }
