@@ -40,7 +40,7 @@ h2{
     margin: 4px;
 }
 .background{
-    background: rgba(0,0,0,0.6) url("../img/background/bg2(1).jpg");
+    background: rgba(0,0,0,0.6) url("opcoder/static/opcoder/img/background/bg2(1).jpg");
     /* background-size: cover;
     background-blend-mode: darken; */
 }

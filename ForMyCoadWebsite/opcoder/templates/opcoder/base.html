@@ -6,20 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'opcoder/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'opcoder/css/styleresponsive.css' %}">
     <title>{% block title %}{% endblock title %}</title>
 </head>
-<body>
-    <nav class="nav-bar " >
+<body> 
+    <nav class="nav-bar h-nav-resp" style="background-color:whitesmoke;" >
         <div class="div1">
-            <img class="logo" src="{% static 'opcoder/img/1.jpg' %}" alt="logo">
-            <ul class="uli1">
+            <div class="burger r-burger-resp">
+                <img class="logo" src="{% static 'opcoder/img/1.jpg' %}" alt="logo">
+            </div>
+            <ul class="uli1 v-class-resp">
                 <li><a href='/'>Home</a></li>
                 <li><a href=/video/>Video</a></li>
                 <li><a href=/blogs/>Blog</a></li>
                 <li><a href=/comment/>Comment</a></li>
                 <li><a href=/private/>private</a></li>
             </ul>
-            <div class="div2">
+            <div class="div2 v-class-resp">
                 <div action="/login">
                     <button class="button-1" >login</button>
                 </div>
@@ -33,6 +36,7 @@
             </div>
         </div>
     </nav>
+    <script src="{% static 'opcoder/js/resp.js' %}"></script>
 
         {% block body %}{% endblock body %}
 
@@ -42,4 +46,4 @@
         </p>
     </footer>
 </body>
-</html>        
+</html>         

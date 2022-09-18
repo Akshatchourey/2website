@@ -1,6 +1,43 @@
-{% extends 'opcoder/base.html' %}
-{% block body %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleresponsive.css">
+    <title>home</title>
+</head>
+<body> 
+    <nav class="nav-bar h-nav-resp" style="background-color:whitesmoke;" >
+        <div class="div1">
+            <div class="burger r-burger-resp">
+                <img class="logo" src="\opcoder\static\opcoder\img\1.jpg" alt="logo">
+            </div>
+            <ul class="uli1 v-class-resp">
+                <li><a href='/'>Home</a></li>
+                <li><a href=/video>Video</a></li>
+                <li><a href=/blogs>Blog</a></li>
+                <li><a href=/comment>Comment</a></li>
+                <li><a href=/private>private</a></li>
+            </ul>
+            <div class="div2 v-class-resp">
+                <div action="/login">
+                    <button class="button-1" >login</button>
+                </div>
+                <div action="/sign_up">
+                    <button class="button-1">SignUp</button>
+                </div>
+                <div action="">
+                    <input  type="text" placeholder="Search" aria-label="Search" name="query" class="inp-1" >
+                    <button type="submit" class="button-1">Search</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="js/resp.js"></script>
+
     <section class="section-0" >
         <div class="div3">
             <ul class="uli3">
@@ -32,7 +69,7 @@
     <h5>Recommendations for you</h5>
     <section class="section2">  
         <div class="div4">
-            <img src="{% static 'opcoder/img/game.jpg' %}"alt="photo">
+            <img src="opcoder/static/opcoder/img/game.jpg"alt="photo">
             <div class="div5">
                 <h3>Gaming center.</h3>
                 <p>Watch videos of diffrent games, and get reefreshed with amasing stuntes, shutings, gameplay.</p>
@@ -40,7 +77,7 @@
             <button class="button-2">click--></button>
         </div>
         <div class="div4">
-            <img src="{% static 'opcoder/img/vlog.jpg' %}" alt="photo">
+            <img src="opcoder/static/opcoder/img/vlog.jpg" alt="photo">
             <div class="div5">
                 <h3>Blogs of mine.</h3>
                 <p> Watch my bloge, enjoy the jorney to the hills,   lots of comedy with my freanda and Kalyug.  </p>
@@ -48,7 +85,7 @@
             <button class="button-2">click--></button>
         </div>      
         <div class="div4">
-            <img src="{% static 'opcoder/img/python.jpg' %}"alt="photo">
+            <img src="opcoder/static/opcoder/img/python.jpg"alt="photo">
             <div class="div5">
                 <h3>Free python courses</h3>
                 <p class="p-1">Get your programming career started with these free video courses. Source code is available with all the videos for amazing learning experience.</p>
@@ -56,7 +93,7 @@
             <button class="button-2">click--></button>
         </div>
         <div class="div4">
-            <img src="{% static 'opcoder/img/vlog.jpg' %}" alt="photo">
+            <img src="opcoder/static/opcoder/img/vlog.jpg" alt="photo">
             <div class="div5">
                 <h3>Blogs of mine.</h3>
                 <p> Watch my bloge, enjoy the jorney to the hills,   lots of comedy with my freanda and Kalyug.</p>
@@ -65,4 +102,10 @@
         </div>  
     </section>
 
-{% endblock body %}    
+    <footer>
+        <p class="text-footer">
+            copyright &copy; 2027 - WWW.CoadWithAkshat_C.com - All rights reserved.
+        </p>
+    </footer>
+</body>
+</html> 
