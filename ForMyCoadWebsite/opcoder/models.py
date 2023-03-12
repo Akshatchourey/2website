@@ -1,9 +1,13 @@
 from django.db import models
 
 
-# video, blog.
-# Create your models here.
+# IMOP ----> concept of Authorization and registration.
+# future=> photo, video, blog, comment.
+# Further Forms=> video, photo, blog.
+# include in blog and other models...
 
+# Create your models here.
+ 
 class Blog(models.Model):
     sno = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
