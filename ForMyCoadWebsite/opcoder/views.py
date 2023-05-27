@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, "opcoder/index.html")
+    return render(request, "opcoder/index-old.html")
 
 def login(request):
     return render(request, "opcoder/login.html")
