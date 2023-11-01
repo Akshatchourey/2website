@@ -45,9 +45,14 @@ h2{
     background-blend-mode: darken; */
 }
 img{
+    cursor: pointer;
     border: 2px solid white;
     border-radius: 50%;
-}  
+}
+a{
+    color: #000000;
+    text-decoration: none;
+}
 .button-1{
     background-color: rgb(0, 176, 82);
     border-radius: 16px;
@@ -101,15 +106,16 @@ li a{
     width:50%;
 }
 
-
+p{
+    margin-bottom: 22px;
+}
 .button-2{
     color: #fff;
     background-color: #1577e0;
     border: 1px #1577e0;
     cursor: pointer;
-    margin-top: 24px;
     padding: 8px 50px;
-    border-radius: 3%;
+    border-radius: 7px;
 
 }
 
@@ -142,7 +148,7 @@ li a{
     border: 1px #085eb9;
     cursor: pointer;
     padding: 8px 50px;
-    border-radius: 3%;
+    border-radius: 7px;
 }
 h5{
     margin-top: 2.5rem;
@@ -151,6 +157,7 @@ h5{
     text-align: center;
 }
 .section2{
+    margin-block-end: 52px;
     display:flex;
     flex-wrap: wrap;
     align-items: center;
@@ -173,8 +180,10 @@ h3{
 .div5{
     text-align: left;
 }
-
-
+footer{
+    bottom: 0;
+    width: 100%;
+}
 .text-footer{
     padding: 15px;margin: 6px;
     font-family: 'ubunto',sans-serif;

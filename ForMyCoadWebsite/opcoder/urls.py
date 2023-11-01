@@ -4,22 +4,24 @@ from .import views1
 from .import views2
 
 urlpatterns = [
-# For views1
+# For views
     path('', views.index, name='opcoder'),
 
+    path('search/', views.search, name='search'),
     path('login/', views.login, name='login'),
-    path('sign_up/', views.sign_up, name='sign up'),
+    path('sign_up/', views.sign_up, name='sign_up'),
     path('private/', views.private, name='private'),
-    path('video/', views.video, name='video'),
+    path('videos/', views.video, name='video'),
     path('video_playing/', views.video_playing, name='video_playing'),
-    path('blogs/', views.blogs, name='blog'),
     path('photos/', views.photos, name='photo'),
+    path('blogs/', views.blog, name='blog'),
+    path('blogpost/<str:slug>',views.blogpost,name='blogpost'),
 
-# For views2
+# For views1
     path('comment/', views1.comment, name='comment'),
     path('comment_submit/', views1.comment_submit, name='comment_submit'),
     path('log_submit/', views1.log_submit, name='log_submit'),
     path('sign_submit/', views1.sign_submit, name='sign_submit'),
 
-# For views3
+# For views2
 ]

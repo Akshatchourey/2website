@@ -1,12 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # For login logic and comment logic.
 
 def log_submit(request):
-    return render(request, "opcoder/index.html")
+    return redirect(request, "/index.html/")
 
 def sign_submit(request):
-    return render(request, "opcoder/login.html")
+    return redirect(request, "/login.html/")
 
 
 def comment(request):

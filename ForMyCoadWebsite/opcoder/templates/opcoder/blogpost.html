@@ -1,0 +1,17 @@
+{% extends 'opcoder/base.html' %}
+{% block body %}
+
+<div class="container">
+    <h1>Welcome to Akshat Blogs</h1>
+    <p>You will find our community thoughts, views and opinion hare on current topics as earliest. </p>
+    <div class="media">
+        <div class="media-body">
+            <h2 class="mt-0">{{name.sno}}.{{name.title}}</h2>
+            <br>{{name.time}}<br>
+            <p>{{name.longcontent}}</p>
+        </div>
+        <a href="/blogs" class="text-dark"><button class="btn btn-primary">More Blogs...</button></a>
+    </div>
+</div>
+
+{% endblock body %}
