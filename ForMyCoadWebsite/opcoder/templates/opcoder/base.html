@@ -23,12 +23,12 @@
                 <li><a href=/private>private</a></li>
             </ul>
             <div class="div2 v-class-resp">
-                <button class="button-1"><a href="login/">login</a></button>
-                <button class="button-1"><a href="sign_up/">SignUp</a></button>
-                <div action="">
-                    <input  type="text" placeholder="Search" aria-label="Search" name="query" class="inp-1" >
-                    <button type="submit" class="button-1">Search</button>
-                </div>
+                <button class="button-1"><a href="/login">login</a></button>
+                <button class="button-1"><a href="/sign_up">SignUp</a></button>
+                <form action="/search" method="get">
+                    <input class="inp-1" type="search" name="slug" placeholder="Search" aria-label="Search">
+                    <button class="button-1" type="submit">Search</button>
+                </form>
             </div>
         </div>
     </nav>

@@ -22,10 +22,10 @@ def sign_up(request):
     return render(request, "opcoder/sign up.html")
 def video(request):
     return render(request, "opcoder/videos.html")
-def private(request):
-    return render(request, "opcoder/private.html")
 def video_playing(request):
     return render(request, "opcoder/video_playing.html")
+def private(request):
+    return render(request, "opcoder/private.html")
 def photos(request):
     return render(request, "opcoder/photos.html")
 

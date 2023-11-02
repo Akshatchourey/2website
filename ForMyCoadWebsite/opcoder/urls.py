@@ -19,7 +19,6 @@ urlpatterns = [
 
 # For views1
     path('comment/', views1.comment, name='comment'),
-    path('comment_submit/', views1.comment_submit, name='comment_submit'),
     path('log_submit/', views1.log_submit, name='log_submit'),
     path('sign_submit/', views1.sign_submit, name='sign_submit'),
 
