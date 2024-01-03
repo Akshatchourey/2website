@@ -1,0 +1,13 @@
+{% extends 'opcoder/base.html' %}
+{% block body %}
+{% load static %}
+<div>
+    <h1>All playlists</h1>
+
+    {% for p in playlists %}
+    <img class="thumbnail" src="/static/{{p.thumbnail}}">
+    <button class="button-2" ><a href="/playlist/{{p.slug}}">{{p.title}}</a></button>
+    {% endfor %}
+
+</div>
+{% endblock body %}

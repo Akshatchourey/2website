@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from math import ceil as c
-from .models import Blog
+from .models import *
 
 # Create your views here.
 
@@ -21,16 +21,33 @@ def login(request):
 def sign_up(request):
     return render(request, "opcoder/sign up.html")
 def video(request):
-    return render(request, "opcoder/videos.html")
-def video_playing(request):
-    return render(request, "opcoder/video_playing.html")
+    no_of_videos = 12
+    page = request.GET.get('page')
+    if page is None:
+        page = 1
+    else:
+        page = int(page)
+    videos = Video.objects.all()
+    length = len(videos)
+    videos = videos[(page-1)*no_of_videos: page*no_of_videos]
+    if page>1:
+        prev=page-1
+    else:
+        prev = None
+    if page < c(length/no_of_videos):
+        nxt = page + 1
+    else:
+        nxt = None
+    context = {'videos': videos, 'prev': prev, 'nxt': nxt}
+    return render(request, "opcoder/videos.html", context)
+
 def private(request):
     return render(request, "opcoder/private.html")
 def photos(request):
     return render(request, "opcoder/photos.html")
 
 def blog(request):
-    no_of_posts = 3
+    no_of_posts = 6
     page = request.GET.get('page')
     if page is None:
         page = 1
