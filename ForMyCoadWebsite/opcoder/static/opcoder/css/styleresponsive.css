@@ -52,10 +52,38 @@
     .h-nav-resp{
         height: 72px;
     }
-    .v-class-resp{  
+    .v-class-resp{
+        display: none;
         opacity: 0;
     }
     img{
         cursor: pointer;
+    }
+}
+
+@media only screen and (max-width: 760px){
+    .section1{
+        flex-direction: column;
+    }
+    .q-ul-1{
+        border-right: 0px;
+    }
+    .q-ul-2{
+        border-top: 5px solid;
+        padding-top: 12px;
+    }
+}
+
+@media only screen and (max-width: 1300px){
+    .vpsection0{
+        flex-direction: column;
+    }
+    .vpsection1{
+        width: 100%;
+    }
+    .vpsection2{
+        width: 85%;
+        margin: auto;
+        margin-bottom: 20px;
     }
 }

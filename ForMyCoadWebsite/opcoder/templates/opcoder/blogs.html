@@ -3,28 +3,29 @@
 
 <div class="container">
     <h1>Welcome to Akshat Blogs</h1>
-    <p>You will find our community thoughts, views and opinion hare on current topics as earliest. </p>
-    {% for bg in blogs %}
-    <div class="media">
-        <div class="media-body">
-            <h3 class="mt-0 text-dark"><a href="/blogpost/{{bg.slug}}" class="text-dark">{{bg.sno}}.{{bg.title}}</a></h3>
-            <br>{{bg.time}}<br>
+    <p>You will find our community thoughts, views and opinion hare on current topics as earliest.</p>
+    <div class="bmedia">
+        {% for bg in blogs %}
+        <div class="blog_body">
+            <h3 class=""><a href="/blogpost/{{bg.slug}}">{{bg.sno}}.{{bg.title}}</a></h3>
+            {{bg.time.date}}
             <p>{{bg.content}}</p>
-        </div>
-        <a href="/blogpost/{{bg.slug}}" class="text-dark"><button class="btn btn-primary">Read More...</button></a>
+            <a href="/blogpost/{{bg.slug}}"><button class="">Read More...</button></a>
+        </div>  
+        {% endfor %}
     </div>
-    {% endfor %}
-    <div class="my-3">
+    
+    <div class="">
         {% if prev %}
-        <button class="btn btn-primary"><a class="text-light" href="/blogs?page={{prev}}">&laquo; Previous</a></button>
+        <button class=""><a href="/blogs?page={{prev}}">&laquo; Previous</a></button>
         {% else %}
-        <button class="btn btn-primary"><a class="text-light" href="#">&laquo; Previous</a></button>
+        <button class=""><a href="#">&laquo; Previous</a></button>
         {% endif %}
 
         {% if nxt %}
-        <button class="btn btn-primary float-right"><a class="text-light" href="/blogs?page={{nxt}}">Next &raquo;</a></button>
+        <button class=""><a href="/blogs?page={{nxt}}">Next &raquo;</a></button>
         {% else %}
-        <button class="btn btn-primary float-right"><a class="text-light" href="#">Next &raquo;</a></button>
+        <button class=""><a href="#">Next &raquo;</a></button>
         {% endif %}
     </div>
 </div>

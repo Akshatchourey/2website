@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from math import ceil as c
+import random
 from .models import *
 
 # Create your views here.
@@ -28,7 +29,9 @@ def video(request):
     else:
         page = int(page)
     videos = Video.objects.all()
+    # videos = list(Video.objects.all())
     length = len(videos)
+    # videos = random.sample(videos, length)
     videos = videos[(page-1)*no_of_videos: page*no_of_videos]
     if page>1:
         prev=page-1
@@ -41,8 +44,8 @@ def video(request):
     context = {'videos': videos, 'prev': prev, 'nxt': nxt}
     return render(request, "opcoder/videos.html", context)
 
-def private(request):
-    return render(request, "opcoder/private.html")
+def profile(request):
+    return render(request, "opcoder/profile.html")
 def photos(request):
     return render(request, "opcoder/photos.html")
 

@@ -28,7 +28,7 @@ h2{
     font-size: 2.25rem;
     color: rgba(4, 187, 90, 0.881);
 }
-.p1{
+.p-1{
     font-size: 1.3rem;
     max-width: 560px;
 }
@@ -44,10 +44,13 @@ h2{
     /* background-size: cover;
     background-blend-mode: darken; */
 }
-img{
-    cursor: pointer;
+.logo{
+    /* cursor: pointer; */
     border: 2px solid white;
     border-radius: 50%;
+}
+.Aklogo{
+    width: 80%;
 }
 a{
     color: #000000;
@@ -92,7 +95,7 @@ li a{
     display:flex;
     height: 24rem;
     margin-inline: auto;
-    max-width: 1450px;
+    max-width: 1500px;
 }
 .uli3{
     width: 50%;
@@ -106,7 +109,7 @@ li a{
     width:50%;
 }
 
-p{
+.p1{
     margin-bottom: 22px;
 }
 .button-2{
@@ -114,8 +117,8 @@ p{
     background-color: #1577e0;
     border: 1px #1577e0;
     cursor: pointer;
-    padding: 8px 50px;
-    border-radius: 7px;
+    padding: 8px 45px;
+    border-radius: 8px;
 
 }
 
@@ -134,7 +137,6 @@ p{
 .q-ul-1{
     font-style: italic;
     width: 50%;
-    display: block;
     border-right: 5px solid;
 }
 .q-ul-2{
@@ -147,8 +149,8 @@ p{
     background-color: #085eb9;
     border: 1px #085eb9;
     cursor: pointer;
-    padding: 8px 50px;
-    border-radius: 7px;
+    padding: 8px 45px;
+    border-radius: 8px;
 }
 h5{
     margin-top: 2.5rem;
@@ -162,15 +164,16 @@ h5{
     flex-wrap: wrap;
     align-items: center;
     margin-inline: auto;
-    max-width: 1500px;
-   
-    
+    max-width: 1500px;   
 }
 .div4{
     text-align: center;
-    border: 2px solid rgb(97, 17, 78);border-radius: 20px;
-    height:370px;width:285px;
-    margin: auto;margin-bottom: 12px;
+    border: 2px solid rgb(97, 17, 78);
+    border-radius: 20px;
+    height:370px;
+    width:285px;
+    margin: auto;
+    margin-bottom: 12px;
     padding: 16px;
 }
 h3{
