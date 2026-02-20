@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django_ckeditor_5.fields import CKEditor5Field
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
-from .utils import generate_fixed_length_slug, generate_category_id, img_preprocessing
+from .utils import generate_fixed_length_slug, img_preprocessing
  
 class Blog(models.Model):
     sno = models.AutoField(primary_key=True)
@@ -87,8 +87,6 @@ class Video(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = generate_fixed_length_slug(self.title)
-
-        self.categoryId = generate_category_id(self.categories)
 
         if self.pk and Video.objects.filter(pk=self.pk).exists():  # Check if updating an existing instance
             old = Video.objects.get(pk=self.pk)  # old = old_instance
