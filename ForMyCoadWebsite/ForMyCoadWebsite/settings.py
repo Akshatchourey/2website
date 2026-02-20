@@ -162,4 +162,6 @@ STORAGES = {
     },
 }
 
+CKEDITOR_5_UPLOAD_PATH = "blogImg/content/"
+
 from .ckeditorconfig import *
