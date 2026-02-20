@@ -22,7 +22,7 @@ urlpatterns = [
 
     # For views2
     path('videos/', views2.video, name='video'),
-    path('videos/<int:factor>', views2.category, name='category'),
+    path('videos/<str:factor>', views2.category, name='category'),
     path('video_playing/<str:slug>', views2.video_playing, name='video_playing'),
     path('playlists/', views2.playlists, name='playlists'),
     path('playlist/<str:slug>', views2.plvideos, name='video_in_playlist'),

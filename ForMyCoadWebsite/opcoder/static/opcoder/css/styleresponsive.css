@@ -31,8 +31,8 @@
 @media only screen and (max-width: 852px){
     .nav-bar{
         /* float: left; */
-        height: 478px;
-        transition: all 0.6s ease-out;
+        height: 470px;
+        transition: all 1.0s ease-out;
     }
     .uli1{
         display:flex;
@@ -45,10 +45,11 @@
         text-align: center;
     }
     .r-burger-resp{
-         transition: transform .8s ease-in-out;
+        text-align: center;
+        transition: transform 1.0s ease-in-out;
     }
     .burger{
-        transform:rotate(40deg);
+        transform:rotate(73deg);
     }
     .h-nav-resp{
         height: 72px;

@@ -38,9 +38,10 @@ def video(request):
 
 
 def category(request, factor):
+    fts_rank_sql = "MATCH (categories) AGAINST (%s IN BOOLEAN MODE)"
     videos = Video.objects.annotate(
-        is_divisible=RawSQL("categoryId %% %s = 0", (factor,))
-    ).filter(is_divisible=True)
+        rank=RawSQL(fts_rank_sql, (factor,))
+    ).filter(rank__gt=0).order_by('-rank', '-tviews')
 
     return show_videos(request, videos)
 
@@ -56,7 +57,7 @@ def playlists(request):
 
 
 def video_playing(request, slug):
-    video_found = Video.objects.filter(slug=slug).first()
+    video_found = get_object_or_404(Video,slug=slug)
     comments = video_found.videoComment.all().order_by("-date")
 
     if video_found:
@@ -64,18 +65,18 @@ def video_playing(request, slug):
         video_found.save()
 
     more_videos = Video.objects.filter(visi=True)
+
     pl_videos = 'None'
     if video_found.playlist:
         pl_videos = Video.objects.filter(playlist=video_found.playlist)
         more_videos = more_videos.exclude(playlist=video_found.playlist)
 
     # fetching related videos
-    factor = video_found.categoryId
-    more_videos = more_videos.annotate(gcd_value=RawSQL("GCD(categoryid, %s)", (factor,))
-                                       ).order_by('-gcd_value', '-tviews')[:10]
-
-    # more_videos = list(more_videos)
-    # more_videos = random.sample(more_videos, len(more_videos))
+    factor = video_found.categories
+    fts_rank_sql = "MATCH (categories) AGAINST (%s IN BOOLEAN MODE)"
+    more_videos = more_videos.annotate(
+        rank=RawSQL(fts_rank_sql, (factor,))
+    ).filter(rank__gt=0).order_by('-rank', '-tviews')[:10]
 
     context = {'name': video_found, 'types':video_found.source[8:23], 'comments':comments, 'plvideos':pl_videos, 'mvideos':more_videos}
     return render(request, "opcoder/video_playing.html", context)

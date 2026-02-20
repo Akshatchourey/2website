@@ -158,4 +158,6 @@ AWS_S3_FILE_OVERWRITE = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+CKEDITOR_5_UPLOAD_PATH = "blogImg/content/"
+
 from .ckeditorconfig import *

@@ -39,18 +39,3 @@ def generate_fixed_length_slug(title, length=18):
     digest = sha256(raw_input.encode('utf-8')).digest()
     base64_slug = urlsafe_b64encode(digest).decode('utf-8').rstrip('=')
     return base64_slug[:length]
-
-
-# entertainment: 41, 43, 47, 53, games: 59, 61, 67, 71, 73, 79, 83, 89, 97
-# education: 101, 103, 107, 109, 113, 127, 131, extra: 137, 139, 149, 151, 157.
-categoryDect = {"entertainment":41,
-                "games":59, "minecraft":61, "GTASan":67,
-                "education":101, "projects":103, "python":107, "techNews":109, "java":113,
-                "noCat":137}
-
-def generate_category_id(categories):
-    final_id = 1
-    for i in categories.split(" "):
-        if i in categoryDect.keys():
-            final_id *= categoryDect[i]
-    return final_id
