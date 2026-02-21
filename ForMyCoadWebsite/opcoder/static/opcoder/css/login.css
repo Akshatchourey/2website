@@ -102,3 +102,11 @@ i{
     text-decoration: none;
     color: white;
 }
+
+.OAuth{
+    margin-top: 15px;
+}
+a{
+    color: white;
+    font-size: 1.1rem;
+}

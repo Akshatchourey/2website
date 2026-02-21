@@ -3,8 +3,73 @@ from django.contrib.auth.models import User
 from django_ckeditor_5.fields import CKEditor5Field
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+import requests
 from .utils import generate_fixed_length_slug, img_preprocessing
- 
+
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from allauth.account.signals import user_signed_up
+from allauth.socialaccount.models import SocialAccount
+from django.core.files.base import ContentFile
+
+class Subscription(models.Model):
+    subscriber = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', related_name='followers', on_delete=models.CASCADE)
+    date_subscribed = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('subscriber', 'profile')
+
+    def __str__(self):
+        return f"{self.subscriber.username} follows {self.profile.user.username}"
+
+class Profile(models.Model):
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    age = models.PositiveIntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    profile_photo = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')
+    subscribers = models.ManyToManyField(User, through=Subscription, related_name='subscriptions', blank=True)
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    def total_subscribers(self):
+        return self.subscribers.count()
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+@receiver(user_signed_up)
+def populate_profile_google(request, user, **kwargs):
+    social_account = SocialAccount.objects.filter(user=user, provider='google').first()
+    if social_account:
+        picture_url = social_account.extra_data.get('picture')
+        if picture_url:
+            try:
+                response = requests.get(picture_url)
+                if response.status_code == 200:
+                    file_name = f"google_avatar_{user.username}.jpg"
+                    user.profile.profile_photo.save(
+                        file_name,
+                        ContentFile(response.content),
+                        save=True
+                    )
+            except Exception:
+                pass
+
+#  Content Models
 class Blog(models.Model):
     sno = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -79,7 +144,6 @@ class Video(models.Model):
     slug = models.CharField(max_length=23, blank=True)
     source = models.CharField(max_length=200, blank=True)
     categories = models.CharField(max_length=350)
-    categoryId = models.PositiveBigIntegerField(blank=True)
 
     def __str__(self):
         return "%s - %s" % (self.slug, self.title)
