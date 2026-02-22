@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from math import ceil as c
-from .models import Blog, BlogComment, Video
+from .models import UserAnalyse, Blog, BlogComment, Video
+from django.db.models import F
 from django.db.models.expressions import RawSQL
 
 from re import sub
@@ -26,9 +27,15 @@ def search(request):
 
     query_string = query_string.lower()
     # Remove punctuation
-    query_string = sub(r'[^\w\s]', '', query_string)
+    query_string = sub(r'[^\w\s]', ' ', query_string)
     words = query_string.split()
     filtered_words = [word for word in words if word not in COMMON_STOP_WORDS]
+
+    # Adding query to UserAnalysis
+    query = filtered_words
+    if query and request.user.is_authenticated:
+        analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
+        analysis.add_search_query(query)
 
     # 4. Re-join the clean words into a string for the MySQL FTS engine
     # We use '+' to force MySQL to match ALL words (Boolean Mode)  or f"'{query}*'"
@@ -79,26 +86,43 @@ def blog(request):
     return show_blog(request, blogs)
 
 def blogpost(request, slug):
-    this_blog = Blog.objects.filter(slug=slug).first()
+    this_blog = get_object_or_404(Blog, slug=slug)
     comments = this_blog.blogComment.all().order_by("-date")
-    context = {'post': this_blog, 'comments':comments}
-    if this_blog:
-        this_blog.views += 1
-        this_blog.save()
+    Blog.objects.filter(pk=this_blog.pk).update(views=F('views') + 1)
 
+    user_has_liked = False
+    if request.user.is_authenticated:
+        analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
+
+        if not analysis.viewed_blogs.filter(pk=this_blog.pk).exists():
+            analysis.viewed_blogs.add(this_blog)
+
+        if analysis.liked_blogs.filter(pk=this_blog.pk).exists():
+            user_has_liked = True
+
+        # analysis = getattr(request.user, 'analysis', None)# lazy loading for speed BCZ we just need to check,not need
+
+    context = {'post': this_blog, 'comments':comments, 'user_has_liked': user_has_liked}
     return render(request, 'opcoder/blogpost.html', context)
 
 @login_required(login_url='/login/')
 @require_POST
 def like_blog_post(request, pk):
     blog_post = get_object_or_404(Blog, sno=pk)
-    blog_post.likes += 1
+    analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
+    if not analysis.liked_blogs.filter(pk=blog_post.pk).exists():
+        analysis.liked_blogs.add(blog_post)
+        blog_post.likes += 1
+        liked = True
+    else:
+        analysis.liked_blogs.remove(blog_post)
+        blog_post.likes = max(0, blog_post.likes - 1)
+        liked = False
+
     blog_post.save()
 
-    return JsonResponse({
-        'likes_count': blog_post.likes,
-        'message': 'Like recorded successfully'
-    })
+    return JsonResponse({'likes_count': blog_post.likes, "liked": liked,
+                         'message': 'Like recorded successfully'})
 
 @login_required(login_url='/login/')
 @require_POST

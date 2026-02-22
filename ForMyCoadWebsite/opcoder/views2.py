@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Playlist, Video, VideoComment
+from .models import UserAnalyse, Playlist, Video, VideoComment
+from django.db.models import F
 from math import ceil as c
 import random
 import json
@@ -59,10 +60,18 @@ def playlists(request):
 def video_playing(request, slug):
     video_found = get_object_or_404(Video,slug=slug)
     comments = video_found.videoComment.all().order_by("-date")
+    Video.objects.filter(pk=video_found.pk).update(tviews=F('tviews') + 1)
 
-    if video_found:
-        video_found.tviews += 1
-        video_found.save()
+    user_has_liked = False
+    if request.user.is_authenticated:
+        analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
+
+        if not analysis.viewed_videos.filter(pk=video_found.pk).exists():
+            analysis.viewed_videos.add(video_found)
+            analysis.update_category_score(video_found.categories, increment_value=1)
+
+        if analysis.liked_videos.filter(pk=video_found.pk).exists():
+            user_has_liked = True
 
     more_videos = Video.objects.filter(visi=True)
 
@@ -78,7 +87,7 @@ def video_playing(request, slug):
         rank=RawSQL(fts_rank_sql, (factor,))
     ).filter(rank__gt=0).order_by('-rank', '-tviews')[:10]
 
-    context = {'name': video_found, 'types':video_found.source[8:23], 'comments':comments, 'plvideos':pl_videos, 'mvideos':more_videos}
+    context = {'name': video_found, 'types':video_found.source[8:23], 'comments':comments, 'user_has_liked': user_has_liked, 'plvideos':pl_videos, 'mvideos':more_videos}
     return render(request, "opcoder/video_playing.html", context)
 
 
@@ -86,13 +95,22 @@ def video_playing(request, slug):
 @require_POST
 def like_video(request, pk):
     video_found = get_object_or_404(Video, sno=pk)
-    video_found.tlikes += 1
+    analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
+    if not analysis.liked_videos.filter(pk=video_found.pk).exists():
+        analysis.liked_videos.add(video_found)
+        analysis.update_category_score(video_found.categories, increment_value=2)
+        video_found.tlikes += 1
+        liked = True
+    else:
+        analysis.liked_videos.remove(video_found)
+        analysis.update_category_score(video_found.categories, increment_value=-2)
+        video_found.tlikes = max(0, video_found.tlikes - 1)
+        liked = False
+
     video_found.save()
 
-    return JsonResponse({
-        'likes_count': video_found.tlikes,
-        'message': 'Like recorded successfully'
-    })
+    return JsonResponse({'likes_count': video_found.tlikes, "liked": liked,
+                         'message': 'Like recorded successfully'})
 
 
 @login_required(login_url='/login/')

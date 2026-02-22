@@ -184,12 +184,19 @@ a{
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    transition: 0.3s;
+    transition: background-color 0.2s ease;
     width: fit-content;
 }
 
 .blog-btn:hover {
     background: var(--secondary-color);
+}
+
+.blog-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-color: #5a6268;
+    color: #fff;
 }
 
 .blog-btn a{

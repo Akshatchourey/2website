@@ -20,9 +20,20 @@
         <div class="vtitle_like_btn">
             <p class="vtitle vlike">{{name.tviews}} views | Likes <span id="like-count">{{name.tlikes}}</span></p>
             {% if request.user.is_authenticated %}
-            <button  id="like-button" data-post-id="{{ name.sno }}" class="video-btn">👍 Like</button>
+            <div class="like-dislike-container" data-url="/like_video/{{ name.sno }}/">
+                <button id="like-button" class="video-btn" {% if user_has_liked %}disabled{% endif %}>
+                    {% if user_has_liked %}Liked! 👍{% else %}👍 Like{% endif %}
+                </button>
+                <button id="dislike-button" class="video-btn" {% if not user_has_liked %}disabled{% endif %}>
+                    {% if not user_has_liked %}Disliked! 👎{% else %}👎 Dislike{% endif %}
+                </button>
+            </div>
             {% else %}
-                <h3>Login to Like this video</h3>
+                <h3>Login to Like this Video</h3>
+                <div class="like-dislike-container">
+                    <button class="video-btn" disabled>👍 Like </button>
+                    <button class="video-btn" disabled>👎 Dislike </button>
+                </div>
             {% endif %}
         </div>
         <div class="vdescription">
@@ -116,42 +127,57 @@
         return cookieValue;
     }
 
-    const likeButton = document.getElementById('like-button');
-    if (likeButton) {
-        likeButton.addEventListener('click', function(e) {
-            e.preventDefault();
+    const likeContainer = document.querySelector('.like-dislike-container');
+    if (likeContainer) {
+        const likeBtn = document.getElementById('like-button');
+        const dislikeBtn = document.getElementById('dislike-button');
+        const likeCountElem = document.getElementById('like-count');
+        const fetchUrl = likeContainer.dataset.url;
 
-            const postId = this.dataset.postId;
-            const likeCountElement = document.getElementById('like-count');
-            const csrftoken = getCookie('csrftoken');
-            const likeUrl = `/like_video/${postId}/`;
-
-            fetch(likeUrl, {
+        function updateBackend() {
+            fetch(fetchUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
+                    'X-CSRFToken': getCookie('csrftoken'),
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({}) // Empty body
+                body: JSON.stringify({})
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(res => res.json())
             .then(data => {
-                if (likeCountElement && data.likes_count !== undefined) {
-                    likeCountElement.textContent = data.likes_count;
+                if (data.likes_count !== undefined) {
+                    likeCountElem.textContent = data.likes_count;
                 }
-                this.disabled = true;
-                this.textContent = 'Liked! 👍';
             })
-            .catch(error => {
-                console.error('Error liking the post:', error);
-                alert(`Error: ${error.message}`);
-            });
+            .catch(err => console.error("Error updating status:", err));
+        }
+
+        likeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if (!likeBtn.disabled) {
+                let currentCount = parseInt(likeCountElem.textContent) || 0;
+                likeBtn.disabled = true;
+                likeBtn.textContent = 'Liked! 👍';
+                dislikeBtn.disabled = false;
+                dislikeBtn.textContent = '👎 Dislike';
+                likeCountElem.textContent = currentCount + 1;
+                updateBackend();
+            }
+        });
+
+        dislikeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!dislikeBtn.disabled) {
+                let currentCount = parseInt(likeCountElem.textContent) || 0;
+                dislikeBtn.disabled = true;
+                dislikeBtn.textContent = 'Disliked! 👎';
+                likeBtn.disabled = false;
+                likeBtn.textContent = '👍 Like';
+                likeCountElem.textContent = Math.max(0, currentCount - 1);
+                updateBackend();
+            }
         });
     }
 
