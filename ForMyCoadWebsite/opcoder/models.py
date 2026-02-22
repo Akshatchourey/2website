@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import FloatField
 from django_ckeditor_5.fields import CKEditor5Field
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
@@ -36,16 +37,47 @@ class Profile(models.Model):
     profile_photo = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')
     subscribers = models.ManyToManyField(User, through=Subscription, related_name='subscriptions', blank=True)
 
+    @property
+    def total_subscribers(self):
+        return self.subscribers.count()
+
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    def total_subscribers(self):
-        return self.subscribers.count()
+class UserAnalyse(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='analysis')
+    liked_videos = models.ManyToManyField('Video', related_name='liked_by_users', blank=True)
+    liked_blogs = models.ManyToManyField('Blog', related_name='liked_by_users', blank=True)
+    viewed_videos = models.ManyToManyField('Video', related_name='viewed_by_users', blank=True)
+    viewed_blogs = models.ManyToManyField('Blog', related_name='viewed_by_users', blank=True)
+    search_queries = models.JSONField(default=list, blank=True)
+    category_affiliation = models.JSONField(default=dict, blank=True, help_text="e.g. {'Django': 5, 'Python': 3}")
+    total_watch_time = models.PositiveIntegerField(default=0)  # Watch time in seconds
+
+    def update_category_score(self, categories_string, increment_value):
+        if not categories_string:
+            return
+
+        categories = [c.strip() for c in categories_string.split(',') if c.strip()]
+        for category in categories:
+            current_score = self.category_affiliation.get(category, 0)
+            self.category_affiliation[category] = current_score + increment_value
+        self.save()
+
+    def add_search_query(self, query):
+        if query not in self.search_queries:
+            self.search_queries.append(query)
+            self.save()
+
+    def __str__(self):
+        return f"Analysis Data: {self.user.username}"
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        UserAnalyse.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
@@ -96,6 +128,7 @@ class BlogComment(models.Model):
 
 class Playlist(models.Model):
     sno = models.AutoField(primary_key=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     desc = models.TextField()
     thumbnail = models.ImageField(upload_to ='playlistThumbnail/')
@@ -133,6 +166,7 @@ class Playlist(models.Model):
 
 class Video(models.Model):
     sno = models.AutoField(primary_key=True)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=250)
     playlist = models.ForeignKey(Playlist, related_name="playlist", on_delete=models.SET_NULL, null=True, blank=True)
     desc = models.TextField()
@@ -172,6 +206,34 @@ class Video(models.Model):
 
         super().delete(*args, **kwargs)  # Delete the model instance
 
+class VideoEngagement(models.Model):
+    video = models.OneToOneField('Video', on_delete=models.CASCADE, related_name='engagement')
+    average_watch_time: float = models.FloatField(default=0.0, help_text="Average watch time in seconds")
+    shares_count = models.PositiveIntegerField(default=0)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def like_view_ratio(self):
+        views = self.video.tviews
+        if views == 0:
+            return 0.0
+        return round(self.video.tlikes / views, 4)
+
+    def comment_frequency(self):
+        views = self.video.tviews
+        if views == 0:
+            return 0.0
+        return round(self.video.videoComment.count() / views, 4)
+
+    def overall_engagement_score(self):
+        return (self.like_view_ratio() * 0.5) + (self.average_watch_time * 0.3) + (self.comment_frequency() * 0.2)
+
+    def __str__(self):
+        return f"Engagement: {self.video.title}"
+
+@receiver(post_save, sender='opcoder.Video')
+def create_video_engagement_profile(sender, instance, created, **kwargs):
+    if created:
+        VideoEngagement.objects.create(video=instance)
 
 class VideoComment(models.Model):
     video = models.ForeignKey(Video, related_name="videoComment", on_delete=models.CASCADE)

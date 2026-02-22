@@ -3,9 +3,11 @@ from .models import *
 
 # Register your models here.
 admin.site.register(Profile)
+admin.site.register(UserAnalyse)
 admin.site.register(Blog)
 admin.site.register(BlogComment)
 admin.site.register(UserFeedback)
 admin.site.register(Playlist)
 admin.site.register(Video)
+admin.site.register(VideoEngagement)
 admin.site.register(VideoComment)
