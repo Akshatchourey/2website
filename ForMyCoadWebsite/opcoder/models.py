@@ -37,6 +37,12 @@ class Profile(models.Model):
     profile_photo = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')
     subscribers = models.ManyToManyField(User, through=Subscription, related_name='subscriptions', blank=True)
 
+    def delete(self, *args, **kwargs):
+        if self.profile_photo:  # Check if there is an image
+            self.profile_photo.delete(save=False)
+
+        super().delete(*args, **kwargs)  # Delete the model instance
+
     @property
     def total_subscribers(self):
         return self.subscribers.count()
