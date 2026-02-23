@@ -43,7 +43,6 @@ class Profile(models.Model):
 
         super().delete(*args, **kwargs)  # Delete the model instance
 
-    @property
     def total_subscribers(self):
         return self.subscribers.count()
 

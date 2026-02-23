@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from math import ceil as c
-from .models import UserAnalyse, Blog, BlogComment, Video
+from .models import Profile, Subscription, UserAnalyse, Blog, BlogComment, Video
 from django.db.models import F
 from django.db.models.expressions import RawSQL
 
@@ -9,6 +9,7 @@ from re import sub
 import json
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -57,6 +58,30 @@ def search(request):
 
     return render(request, 'opcoder/search_results.html', context)
 
+@login_required(login_url='/login/')
+@require_POST
+def toggle_subscribe(request, user_id):
+    target_user = get_object_or_404(User, pk=user_id)
+
+    if request.user == target_user:
+        return JsonResponse({"status": "failed", "message": "Cannot subscribe to yourself"}, status=400)
+
+    target_profile = target_user.profile
+    subscription = Subscription.objects.filter(subscriber=request.user, profile=target_profile).first()
+
+    if subscription:
+        subscription.delete()
+        subscribed = False
+    else:
+        Subscription.objects.create(subscriber=request.user, profile=target_profile)
+        subscribed = True
+
+    return JsonResponse({
+        'status': 'success',
+        'subscribed': subscribed,
+        'subscriber_count': target_profile.total_subscribers()
+    })
+
 def profile(request):
     return render(request, "opcoder/profile.html")
 
@@ -90,7 +115,10 @@ def blogpost(request, slug):
     comments = this_blog.blogComment.all().order_by("-date")
     Blog.objects.filter(pk=this_blog.pk).update(views=F('views') + 1)
 
+    owner_sub_count = this_blog.owner.profile.total_subscribers()
+
     user_has_liked = False
+    is_subscribed = False
     if request.user.is_authenticated:
         analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
 
@@ -100,9 +128,12 @@ def blogpost(request, slug):
         if analysis.liked_blogs.filter(pk=this_blog.pk).exists():
             user_has_liked = True
 
+        is_subscribed = Subscription.objects.filter(
+            subscriber=request.user, profile=this_blog.owner.profile).exists()
+
         # analysis = getattr(request.user, 'analysis', None)# lazy loading for speed BCZ we just need to check,not need
 
-    context = {'post': this_blog, 'comments':comments, 'user_has_liked': user_has_liked}
+    context = {'post': this_blog, 'comments':comments, 'user_has_liked': user_has_liked, 'is_subscribed': is_subscribed, 'owner_sub_count': owner_sub_count}
     return render(request, 'opcoder/blogpost.html', context)
 
 @login_required(login_url='/login/')

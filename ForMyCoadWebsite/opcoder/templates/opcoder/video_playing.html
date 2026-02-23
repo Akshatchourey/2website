@@ -9,18 +9,18 @@
     <div class="vpsection1">
         <div class="vscreen">
             {% if types != "personalcode-v1" %}
-            <iframe class="vscreen1" src="{{name.source}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe class="vscreen1" src="{{post.source}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             {% else %}
-            <video class="vscreen1" preload="metadata" poster="{{name.thumbnail.url}}" controls="controls">
-                <source src= "{{name.source}}">
+            <video class="vscreen1" preload="metadata" poster="{{post.thumbnail.url}}" controls="controls">
+                <source src= "{{post.source}}">
             </video>
             {% endif %}
         </div>
-        <h1 class="vtitle">{{name.title}}</h1>
-        <div class="vtitle_like_btn">
-            <p class="vtitle vlike">{{name.tviews}} views | Likes <span id="like-count">{{name.tlikes}}</span></p>
+        <h1 class="vtitle">{{post.title}}</h1>
+        <div class="vtitle_like_bar">
+            <p class="vtitle vlike">{{post.tviews}} views | Likes <span id="like-count">{{post.tlikes}}</span></p>
             {% if request.user.is_authenticated %}
-            <div class="like-dislike-container" data-url="/like_video/{{ name.sno }}/">
+            <div class="like-dislike-container" data-url="/like_video/{{ post.sno }}/">
                 <button id="like-button" class="video-btn" {% if user_has_liked %}disabled{% endif %}>
                     {% if user_has_liked %}Liked! 👍{% else %}👍 Like{% endif %}
                 </button>
@@ -29,22 +29,39 @@
                 </button>
             </div>
             {% else %}
-                <h3>Login to Like this Video</h3>
                 <div class="like-dislike-container">
-                    <button class="video-btn" disabled>👍 Like </button>
-                    <button class="video-btn" disabled>👎 Dislike </button>
+                    <button class="video-btn disabled"  onclick="alert('Please login to like this video!')">👍 Like </button>
+                    <button class="video-btn disabled"  onclick="alert('Please login to dislike this video!')">👎 Dislike </button>
                 </div>
             {% endif %}
         </div>
+
         <div class="vdescription">
-            <p>{{name.date.date}}</p>
-            <p class="vdesc">{{name.desc|linebreaks}}</p>
+
+            <div class="author-info-section">
+                <p class="author-name">{{ post.owner.username }} 👉</p>
+                <p class="sub-count"><span id="subscriber-count">{{ owner_sub_count }}</span> Subscribers</p>
+                {% if request.user.is_authenticated %}
+                    {% if request.user != post.owner %}
+                        <button id="subscribe-btn"
+                                class="sub-btn {% if is_subscribed %}subscribed{% endif %}"
+                                data-url="/toggle_subscribe/{{ post.owner.id }}/">
+                            {% if is_subscribed %}Subscribed 🙂{% else %}Subscribe{% endif %}
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <button class="sub-btn disabled" onclick="alert('Please login to subscribe!')">Subscribe</button>
+                {% endif %}
+            </div>
+
+            <p>{{post.date.date}}</p>
+            <p class="vdesc">{{post.desc|linebreaks}}</p>
         </div>
         <div class="video-comment">
             <h1>Comment Section</h1>
 
             {% if request.user.is_authenticated %}
-            <form id="comment-form" method="post" data-post-id="{{ name.sno }}">
+            <form id="comment-form" method="post" data-url="/comment_video/{{ post.sno }}/">
                 {% csrf_token %}
                 <div class="vcomment">
                     <textarea class="new_comment" id="new_comment" name="new_comment" required></textarea>
@@ -111,138 +128,6 @@
     </div>
 </div>
 
-<script>
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    const likeContainer = document.querySelector('.like-dislike-container');
-    if (likeContainer) {
-        const likeBtn = document.getElementById('like-button');
-        const dislikeBtn = document.getElementById('dislike-button');
-        const likeCountElem = document.getElementById('like-count');
-        const fetchUrl = likeContainer.dataset.url;
-
-        function updateBackend() {
-            fetch(fetchUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify({})
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.likes_count !== undefined) {
-                    likeCountElem.textContent = data.likes_count;
-                }
-            })
-            .catch(err => console.error("Error updating status:", err));
-        }
-
-        likeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            if (!likeBtn.disabled) {
-                let currentCount = parseInt(likeCountElem.textContent) || 0;
-                likeBtn.disabled = true;
-                likeBtn.textContent = 'Liked! 👍';
-                dislikeBtn.disabled = false;
-                dislikeBtn.textContent = '👎 Dislike';
-                likeCountElem.textContent = currentCount + 1;
-                updateBackend();
-            }
-        });
-
-        dislikeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (!dislikeBtn.disabled) {
-                let currentCount = parseInt(likeCountElem.textContent) || 0;
-                dislikeBtn.disabled = true;
-                dislikeBtn.textContent = 'Disliked! 👎';
-                likeBtn.disabled = false;
-                likeBtn.textContent = '👍 Like';
-                likeCountElem.textContent = Math.max(0, currentCount - 1);
-                updateBackend();
-            }
-        });
-    }
-
-    const commentForm = document.getElementById('comment-form');
-    if (commentForm) {
-        commentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const postId = this.dataset.postId;
-            const commentBodyInput = document.getElementById('new_comment');
-            const commentBody = commentBodyInput.value.trim();
-            const commentListContainer = document.getElementById('comment-list-container');
-            const noCommentsMsg = document.getElementById('no-comments-msg');
-            const csrftoken = getCookie('csrftoken');
-            const commentUrl = `/comment_video/${postId}/`;
-
-            if (!commentBody) {
-                alert('Comment cannot be empty.');
-                return;
-            }
-
-            fetch(commentUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify({
-                    'comment_body': commentBody
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    if(response.status === 403) {
-                         throw new Error('You must be logged in to comment.');
-                    }
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    if (noCommentsMsg) {
-                        noCommentsMsg.remove();
-                    }
-                    const newCommentHtml = `
-                        <div class="comment">
-                            <p>${data.comment_body}</p>
-                            <div class="comment-meta">
-                                ${data.comment_name} | ${data.comment_date}
-                            </div>
-                        </div>
-                    `;
-                    commentListContainer.insertAdjacentHTML('afterbegin', newCommentHtml);
-
-                    commentBodyInput.value = '';
-                }
-            })
-            .catch(error => {
-                console.error('Error adding comment:', error);
-                alert(`Error: ${error.message}`);
-            });
-        });
-    }
-</script>
+<script src="{% static 'opcoder/js/content.js' %}"></script>
 
 {% endblock body %}
