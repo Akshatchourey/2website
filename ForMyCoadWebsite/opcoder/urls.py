@@ -6,6 +6,7 @@ urlpatterns = [
     # For views
     path('', views.index, name='opcoder'),
     path('search/', views.search, name='search_view'),
+    path('toggle_subscribe/<int:user_id>/', views.toggle_subscribe, name='toggle_subscribe'),
     path('profile/', views.profile, name='profile'),
     path('blogs/', views.blog, name='blog'),
     path('blogpost/<str:slug>',views.blogpost,name='blogpost'),

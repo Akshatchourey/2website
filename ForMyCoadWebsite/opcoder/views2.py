@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import UserAnalyse, Playlist, Video, VideoComment
+from .models import Profile, Subscription, UserAnalyse, Playlist, Video, VideoComment
 from django.db.models import F
 from math import ceil as c
 import random
@@ -62,7 +62,10 @@ def video_playing(request, slug):
     comments = video_found.videoComment.all().order_by("-date")
     Video.objects.filter(pk=video_found.pk).update(tviews=F('tviews') + 1)
 
+    owner_sub_count = video_found.owner.profile.total_subscribers()
+
     user_has_liked = False
+    is_subscribed = False
     if request.user.is_authenticated:
         analysis, _ = UserAnalyse.objects.get_or_create(user=request.user)
 
@@ -72,6 +75,9 @@ def video_playing(request, slug):
 
         if analysis.liked_videos.filter(pk=video_found.pk).exists():
             user_has_liked = True
+
+        is_subscribed = Subscription.objects.filter(
+            subscriber=request.user, profile=video_found.owner.profile).exists()
 
     more_videos = Video.objects.filter(visi=True)
 
@@ -87,7 +93,9 @@ def video_playing(request, slug):
         rank=RawSQL(fts_rank_sql, (factor,))
     ).filter(rank__gt=0).order_by('-rank', '-tviews')[:10]
 
-    context = {'name': video_found, 'types':video_found.source[8:23], 'comments':comments, 'user_has_liked': user_has_liked, 'plvideos':pl_videos, 'mvideos':more_videos}
+    context = {'post': video_found, 'types':video_found.source[8:23], 'comments':comments,
+               'user_has_liked': user_has_liked, 'is_subscribed': is_subscribed,
+               'owner_sub_count': owner_sub_count, 'plvideos':pl_videos, 'mvideos':more_videos}
     return render(request, "opcoder/video_playing.html", context)
 
 

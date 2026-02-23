@@ -91,11 +91,19 @@
 }
 .vlike{
     font-size: 1.4rem;
+    padding-left: 8px;
 }
-.vtitle_like_btn{
+.vtitle_like_bar{
     display:flex;
-    margin-bottom: 2px;
+    margin-bottom: 8px;
+    margin-inline: 7%;
 }
+.like-dislike-container{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .vdescription{
     margin-inline: 7%;
     font-family: "Roboto","Arial",sans-serif;
@@ -196,6 +204,41 @@
     cursor: not-allowed;
     border-color: #5a6268;
     color: #fff;
+}
+.video-btn.disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-color: #5a6268;
+    color: #fff;
+}
+
+.sub-btn {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sub-btn.subscribed {
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.sub-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.author-info-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 8px;
 }
 
 @media only screen and (max-width: 1100px){
