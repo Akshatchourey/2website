@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'opcoder.apps.OpcoderConfig',
 
     'storages',
+    'corsheaders',
     'django_ckeditor_5',
+    'rest_framework',
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -56,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -163,6 +167,15 @@ AWS_S3_FILE_OVERWRITE = False
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+CORS_ALLOWED_ORIGINS = [
+    # "http://localhost:3000",
+    # "http://127.0.0.1:3000",
+    "https://codewithakshat.onrender.com",  # Later in production domain
+]
+CORS_ALLOW_CREDENTIALS = True  # for frontend to send cookies or authentication headers
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://codewithakshat.onrender.com"]  # > session-based authentication
+
 
 # Google Auth
 SITE_ID = 1

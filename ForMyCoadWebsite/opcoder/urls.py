@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from .import views, views1, views2
+from .import views, views1, views2, views3
 
 urlpatterns = [
     # For views
@@ -29,4 +29,7 @@ urlpatterns = [
     path('playlist/<str:slug>', views2.plvideos, name='video_in_playlist'),
     path('like_video/<int:pk>/', views2.like_video, name='like_video'),
     path('comment_video/<int:pk>/', views2.comment_video, name='comment_video'),
+
+    # For frontend APIs - views3
+    path('api/account/', views3.get_account_data, name='api-account'),
 ]

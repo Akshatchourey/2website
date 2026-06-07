@@ -22,4 +22,6 @@ gunicorn
 uvicorn==0.34.2
 whitenoise==6.9.0
 cryptography
-requests
+djangorestframework
+django-cors-headers
+djangorestframework-simplejwt
