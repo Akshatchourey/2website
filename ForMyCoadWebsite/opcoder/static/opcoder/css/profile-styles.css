@@ -214,6 +214,7 @@ body {
 }
 
 .cert-card {
+    display: flex;
     background-color: #ffffff;
     padding: 20px;
     border-radius: var(--border-radius);
@@ -221,6 +222,8 @@ body {
     transition: box-shadow 0.3s, transform 0.3s;
     text-align: center;
     border-top: 3px solid var(--secondary-color);
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .cert-card:hover {
