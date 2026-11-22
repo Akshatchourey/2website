@@ -32,7 +32,7 @@
             <h3>Primary Languages</h3>
             <div class="skill-list">
                 <span class="skill-item">Python</span>
-                <span class="skill-item">Java</span>
+                <span class="skill-item skill-focus">Java</span>
                 <span class="skill-item">HTML</span>
                 <span class="skill-item">CSS</span>
                 <span class="skill-item">JavaScript</span>
@@ -44,6 +44,7 @@
             <h3>Frameworks & Libraries</h3>
             <div class="skill-list">
                 <span class="skill-item skill-focus">Django</span>
+                <span class="skill-item skill-focus">DRF</span>
                 <span class="skill-item">Flask</span>
                 <span class="skill-item">React (Basics)</span>
                 <span class="skill-item">Next (Basics)</span>
@@ -53,9 +54,10 @@
         <div class="skill-category">
             <h3>Databases & Tools</h3>
             <div class="skill-list">
-                <span class="skill-item">MySQL</span>
+                <span class="skill-item skill-focus">MySQL</span>
+                <span class="skill-item">SQLite</span>
                 <span class="skill-item">PostgreSQL</span>
-                <span class="skill-item">Git/GitHub</span>
+                <span class="skill-item skill-focus">Git/GitHub</span>
                 <span class="skill-item">Docker</span>
             </div>
         </div>
@@ -63,7 +65,9 @@
         <div class="skill-category">
             <h3>Cloud & DevOps</h3>
             <div class="skill-list">
-                <span class="skill-item">AWS S3/EC2</span>
+                <span class="skill-item">GCP</span>
+                <span class="skill-item skill-focus">AWS</span>
+                <span class="skill-item">FireStore</span>
                 <span class="skill-item">Linux</span>
                 <span class="skill-item">CI/CD (Basics)</span>
             </div>
@@ -103,84 +107,98 @@
     <h2 class="section-title">Certifications</h2>
 
     <div class="cert-grid">
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/NPTEL Cloud Computing.png" data-cert-title="Cloud Computing">
+         <div class="cert-card" data-cert-image="{{ s3_urls.Internship_Infotact }}" data-cert-title="Cloud Computing">
+            <h3>Cloud Computing</h3>
+            <p>Issued By: Infotact Solutions</p>
+            <p>Issued Date: 18 May 2025</p>
+            <button class="view-cert-btn">View Credential</button>
+        </div>
+
+         <div class="cert-card" data-cert-image="{{ s3_urls.Internship_Paranabhuti }}" data-cert-title="Cloud Computing">
+            <h3>Cloud Computing</h3>
+            <p>Issued By: Paranubhuti Foundation</p>
+            <p>Issued Date: 18 May 2025</p>
+            <button class="view-cert-btn">View Credential</button>
+        </div>
+
+        <div class="cert-card" data-cert-image="{{ s3_urls.NPTEL_cloud_Computing }}" data-cert-title="Cloud Computing">
             <h3>Cloud Computing</h3>
             <p>Issued By: NPTEL</p>
             <p>Issued Date: 18 May 2025</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/NPTEL Marketing Analytics.png" data-cert-title="Marketing Analytics">
+        <div class="cert-card" data-cert-image="{{ s3_urls.NPTEL_Marketing }}" data-cert-title="Marketing Analytics">
             <h3>Marketing Analytics</h3>
             <p>Issued By: NPTEL</p>
             <p>Issued Date: 02 May 2026</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/AWS Technical Essentials.png" data-cert-title="AWS Technical Essentials">
+        <div class="cert-card" data-cert-image="{{ s3_urls.AWS_Technical_Essentials }}" data-cert-title="AWS Technical Essentials">
             <h3>AWS Technical Essentials</h3>
             <p>Issued By: AWS Training & Certification</p>
             <p>Issued Date: 20 Sep 2025</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/AWS Cloud Practitioner.png" data-cert-title="AWS Certified Cloud Practitioner">
+        <div class="cert-card" data-cert-image="{{ s3_urls.AWS_Cloud_Practitioner }}" data-cert-title="AWS Certified Cloud Practitioner">
             <h3>AWS Certified Cloud Practitioner</h3>
             <p>Issued By: AWS Training & Certification</p>
             <p>Issued Date: 19 Sep 2025</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/Coursera_ComputerNetworking.png" data-cert-title="The Bits and Bytes of Computer Networking">
+        <div class="cert-card" data-cert-image="{{ s3_urls.Coursera_ComputerNetworking }}" data-cert-title="The Bits and Bytes of Computer Networking">
             <h3>The Bits and Bytes of Computer Networking</h3>
             <p>Issued By: Google</p>
             <p>Issued Date: 5 Nov 2024</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/Python Certificate.png" data-cert-title="Python Essentials">
+        <div class="cert-card" data-cert-image="{{ s3_urls.Python_Certificate }}" data-cert-title="Python Essentials">
             <h3>Python Essentials</h3>
             <p>Issued By: VitYarthi</p>
             <p>Issued Date: 30 Apr 2024</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/Software Engineer Intern Hackerrank.png" data-cert-title="Software Engineer Intern">
+        <div class="cert-card" data-cert-image="{{ s3_urls.Intern_Hackerrank }}" data-cert-title="Software Engineer Intern">
             <h3>Software Engineer Intern</h3>
             <p>Issued By: HackerRank</p>
             <p>Issued Date: 8 Apr 2024</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/javabasic Hackerrank.png" data-cert-title="Java Basics">
+        <div class="cert-card" data-cert-image="{{ s3_urls.java_basic_Hackerrank }}" data-cert-title="Java Basics">
             <h3>Java Basics</h3>
             <p>Issued By: HackerRank</p>
             <p>Issued Date: 8 Apr 2024</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/problem SolvingBasic Hackerrank.png" data-cert-title="Problem Solving Basic">
+        <div class="cert-card" data-cert-image="{{ s3_urls.python_solving_hackerrank }}" data-cert-title="Problem Solving Basic">
             <h3>Problem Solving Basic</h3>
             <p>Issued By: HackerRank</p>
             <p>Issued Date: 7 Apr 2024</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/PythonBasic Hackerrank.png" data-cert-title="Python Basic">
+        <div class="cert-card" data-cert-image="{{ s3_urls.python_basic_hackerrank }}" data-cert-title="Python Basic">
             <h3>Python Basic</h3>
             <p>Issued By: HackerRank</p>
             <p>Issued Date: 7 Apr 2024</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/AIML Certificate.png" data-cert-title="Fundamentals of Al and ML">
+        <div class="cert-card" data-cert-image="{{ s3_urls.AIML_Certificate }}" data-cert-title="Fundamentals of Al and ML">
             <h3>Fundamentals of Al and ML</h3>
             <p>Issued By: VitYarthi</p>
             <p>Issued Date: 22 Dec 2023</p>
             <button class="view-cert-btn">View Credential</button>
         </div>
 
-        <div class="cert-card" data-cert-image="{{MEDIA_URL}}certificates/MathLabOnramp.png"  data-cert-title="MATLAB Onramp">
+        <div class="cert-card" data-cert-image="{{ s3_urls.MathLabOnramp }}"  data-cert-title="MATLAB Onramp">
             <h3>MATLAB Onramp</h3>
             <p>Issued By: MathWorks</p>
             <p>Issued Date: 27 Aug 2023</p>
@@ -285,12 +303,12 @@ const projectData = [
             video: "{% url 'video_playing' 'iA0QHR62TgznW-NklK' %}"
         },
         images: [
-            { src: "{{MEDIA_URL}}projectImg/project 1_1.png", caption: "Login/entry point of the application." },
-            { src: "{{MEDIA_URL}}projectImg/project 1_2.png", caption: "Intuitive home screen for TrackMySpend." },
-            { src: "{{MEDIA_URL}}projectImg/project 1_3.png", caption: "Personalize page for checking balance and notes. " },
-            { src: "{{MEDIA_URL}}projectImg/project 1_4.png", caption: "Date entry page - manual or using WhatsApp" },
-            { src: "{{MEDIA_URL}}projectImg/project 1_5.png", caption: "Detailed monthly spending visualizations." },
-            { src: "{{MEDIA_URL}}projectImg/project 1_6.png", caption: "Detailed category wise spending visualizations." }
+            { src: "{{ s3_urls.project_1_1 }}", caption: "Login/entry point of the application." },
+            { src: "{{ s3_urls.project_1_2 }}", caption: "Intuitive home screen for TrackMySpend." },
+            { src: "{{ s3_urls.project_1_3 }}", caption: "Personalize page for checking balance and notes. " },
+            { src: "{{ s3_urls.project_1_4 }}", caption: "Date entry page - manual or using WhatsApp" },
+            { src: "{{ s3_urls.project_1_5 }}", caption: "Detailed monthly spending visualizations." },
+            { src: "{{ s3_urls.project_1_6 }}", caption: "Detailed category wise spending visualizations." }
         ]
     },
     // PROJECT 2
@@ -311,12 +329,12 @@ const projectData = [
             video: "/error404"
         },
         images: [
-            { src: "{{MEDIA_URL}}projectImg/project 2_1.png", caption: "Intuitive home page for Pahal website." },
-            { src: "{{MEDIA_URL}}projectImg/project 2_2.png", caption: "Donation facilitated using RazorPay API." },
-            { src: "{{MEDIA_URL}}projectImg/project 2_3.png", caption: "Forum section for community - Blogs, Videos, Gallery." },
-            { src: "{{MEDIA_URL}}projectImg/project 2_4.png", caption: "Dashboard home page for foundation backend purposes." },
-            { src: "{{MEDIA_URL}}projectImg/project 2_5.png", caption: "Student info to manage enrolled students." },
-            { src: "{{MEDIA_URL}}projectImg/project 2_6.png", caption: "Admin penal for managing permissions and assigning tasks." }
+            { src: "{{ s3_urls.project_2_1 }}", caption: "Intuitive home page for Pahal website." },
+            { src: "{{ s3_urls.project_2_2 }}", caption: "Donation facilitated using RazorPay API." },
+            { src: "{{ s3_urls.project_2_3 }}", caption: "Forum section for community - Blogs, Videos, Gallery." },
+            { src: "{{ s3_urls.project_2_4 }}", caption: "Dashboard home page for foundation backend purposes." },
+            { src: "{{ s3_urls.project_2_5 }}", caption: "Student info to manage enrolled students." },
+            { src: "{{ s3_urls.project_2_6 }}", caption: "Admin penal for managing permissions and assigning tasks." }
         ]
     },
     // PROJECT 3
@@ -337,12 +355,12 @@ const projectData = [
             video: "/error404"
         },
         images: [
-            { src: "{{MEDIA_URL}}projectImg/project 3_1.png", caption: "Intuitive home screen of personal website." },
-            { src: "{{MEDIA_URL}}projectImg/project 3_2.png", caption: "Blog Center consisting of new released blogs." },
-            { src: "{{MEDIA_URL}}projectImg/project 3_3.png", caption: "Video Feed - tailored to user preference." },
-            { src: "{{MEDIA_URL}}projectImg/project 3_4.png", caption: "Video streaming page with more preferred suggestions." },
-            { src: "{{MEDIA_URL}}projectImg/project 3_5.png", caption: "Feedback page for further improvements." },
-            { src: "{{MEDIA_URL}}projectImg/project 3_6.png", caption: "Profile page - The reason why I made this website." }
+            { src: "{{ s3_urls.project_3_1 }}", caption: "Intuitive home screen of personal website." },
+            { src: "{{ s3_urls.project_3_2 }}", caption: "Blog Center consisting of new released blogs." },
+            { src: "{{ s3_urls.project_3_3 }}", caption: "Video Feed - tailored to user preference." },
+            { src: "{{ s3_urls.project_3_4 }}", caption: "Video streaming page with more preferred suggestions." },
+            { src: "{{ s3_urls.project_3_5 }}", caption: "Feedback page for further improvements." },
+            { src: "{{ s3_urls.project_3_6 }}", caption: "Profile page - The reason why I made this website." }
         ]
     }
 ];

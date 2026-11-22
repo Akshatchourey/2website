@@ -142,7 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = f'https://personalcode-v1.s3.amazonaws.com/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -159,13 +159,28 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD','')
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID','')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY','')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME','')
-AWS_S3_REGION_NAME = 'eu-north-1'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_REGION_NAME = 'ap-southeast-1'
 AWS_S3_FILE_OVERWRITE = False
+
+# S3 Security: Force private ACLs and expiring pre-signed URLs
+AWS_DEFAULT_ACL = 'private'
+AWS_QUERYSTRING_AUTH = True
+AWS_QUERYSTRING_EXPIRE = 604800  # URLs expire in 7 days (SigV4 maximum)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+
 
 STORAGES = {
     "default": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        # OPTIONS dict for newer django-storages (>=1.14) compatibility
+        "OPTIONS": {
+            "default_acl": "private",
+            "querystring_auth": True,
+            "querystring_expire": 604800,
+        },
     },
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
