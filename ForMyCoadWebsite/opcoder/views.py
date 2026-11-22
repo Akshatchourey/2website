@@ -12,6 +12,10 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+import boto3
+from botocore.exceptions import ClientError
+from django.conf import settings
+
 # Create your views here.
 
 COMMON_STOP_WORDS = {
@@ -83,7 +87,69 @@ def toggle_subscribe(request, user_id):
     })
 
 def profile(request):
-    return render(request, "opcoder/profile.html")
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME,
+    )
+
+    s3_files = {
+        "project_1_1": "projectImg/project 1_1.png",
+        "project_1_2": "projectImg/project 1_2.png",
+        "project_1_3": "projectImg/project 1_3.png",
+        "project_1_4": "projectImg/project 1_4.png",
+        "project_1_5": "projectImg/project 1_5.png",
+        "project_1_6": "projectImg/project 1_6.png",
+        "project_2_1": "projectImg/project 2_1.png",
+        "project_2_2": "projectImg/project 2_2.png",
+        "project_2_3": "projectImg/project 2_3.png",
+        "project_2_4": "projectImg/project 2_4.png",
+        "project_2_5": "projectImg/project 2_5.png",
+        "project_2_6": "projectImg/project 2_6.png",
+        "project_3_1": "projectImg/project 3_1.png",
+        "project_3_2": "projectImg/project 3_2.png",
+        "project_3_3": "projectImg/project 3_3.png",
+        "project_3_4": "projectImg/project 3_4.png",
+        "project_3_5": "projectImg/project 3_5.png",
+        "project_3_6": "projectImg/project 3_6.png",
+
+        "Internship_Infotact": "certificates/Internship Infotact.png",
+        "Internship_Paranabhuti": "certificates/Internship Paranubhuti Foundation.jpg",
+        "NPTEL_cloud_Computing": "certificates/NPTEL Cloud Computing.png",
+        "NPTEL_Marketing": "certificates/NPTEL Marketing Analytics.png",
+        "AWS_Technical_Essentials": "certificates/AWS Technical Essentials.png",
+        "AWS_Cloud_Practitioner": "certificates/AWS Cloud Practitioner.png",
+        "Coursera_ComputerNetworking": "certificates/Coursera_ComputerNetworking.png",
+        "Python_Certificate": "certificates/Python Certificate.png",
+        "Intern_Hackerrank": "certificates/Software Engineer Intern Hackerrank.png",
+        "java_basic_Hackerrank": "certificates/javabasic Hackerrank.png",
+        "python_solving_hackerrank": "certificates/problem SolvingBasic Hackerrank.png",
+        "python_basic_hackerrank": "certificates/PythonBasic Hackerrank.png",
+        "AIML_Certificate": "certificates/AIML Certificate.png",
+        "MathLabOnramp": "certificates/MathLabOnramp.png",
+    }
+
+    signed_urls = {}
+    for key, s3_path in s3_files.items():
+        try:
+            url = s3_client.generate_presigned_url(
+                "get_object",
+                Params={
+                    "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
+                    "Key": s3_path,
+                },
+                ExpiresIn=3600,  # URL expires in 1 hour (3600 seconds)
+            )
+            signed_urls[key] = url
+        except ClientError as e:
+            print(f"Error signing {s3_path}: {e}")
+            signed_urls[key] = ""
+
+    context = {
+        "s3_urls": signed_urls,
+    }
+    return render(request, "opcoder/profile.html", context)
 
 def show_blog(request, blogs):
     no_of_posts = 6
